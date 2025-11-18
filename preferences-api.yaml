@@ -1,0 +1,50 @@
+openapi: 3.1.0
+info:
+  title: ProductGPT Preferences API
+  version: 1.0.0
+  description: Allows GPT to store and retrieve user preferences in Notion.
+
+servers:
+  - url: https://api.notion.com/v1
+
+paths:
+  /pages:
+    post:
+      operationId: addPreference
+      summary: Add a user preference to Notion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parent:
+                  type: object
+                  properties:
+                    database_id:
+                      type: string
+                properties:
+                  type: object
+      responses:
+        '200':
+          description: Preference added
+
+  /databases/2af9faec2b6780cc8c87fb57768624ba/query:
+    post:
+      operationId: getPreferences
+      summary: Get preferences from Notion
+      responses:
+        '200':
+          description: List of preferences
+
+components:
+  schemas: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+
+security:
+  - bearerAuth: []
